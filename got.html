@@ -1,0 +1,79 @@
+<html>
+<head>
+    <title>Game of Thrones</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //House Targaryen: https://anapioficeandfire.com/api/houses/378
+            //House Stark: https://anapioficeandfire.com/api/houses/362
+            //House Lannister: https://anapioficeandfire.com/api/houses/229
+            //House Baratheon: https://anapioficeandfire.com/api/houses/15
+
+            $('img').click(function () {
+                $.get("https://anapioficeandfire.com/api/houses/" + $(this).attr("id"), house) 
+                function house (data){
+                    $(".detail").html("Name: " + data["name"] + '<br><br>');
+                    $(".detail").append("Region: " + data["region"] + '<br><br>');
+                    $(".detail").append("Words: " + data["words"] + '<br><br>');
+                    for (var i = 0; i < data["titles"].length; i++) {
+                        if (i == 0) {
+                            $(".detail").append("Titles: " + data["titles"][i] + ', ');
+                        }
+                        else if (i == data["titles"].length - 1) {
+                            $(".detail").append("and " + data["titles"][i] + '.');
+                        }
+                        else {
+                            $(".detail").append(data["titles"][i] + ', ');
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <style>
+        h1 {
+            text-align: center;
+            font-size: 35px;
+        }
+        #houses {
+            margin-left: 30px;
+        }
+        #houses img {
+            width: 300px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        #info {
+            width: 700px;
+            background-color: rgb(108, 117, 199);
+            margin: 0px auto;
+        }
+        h2 {
+            text-align: center;
+            padding: 10px;
+        }
+        .detail {
+            padding-left: 40px;
+            padding-bottom: 30px;
+            font-size: 20px;
+            padding-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id = "wrapper">
+        <h1><u>Game of Thrones</u></h1>
+        <div id = "houses">
+            <h2>Click on the images to display the information for each of the houses.</h2>
+            <img src = "stark.jpg" id = "362">
+            <img src = "targaryen.jpg" id = "378">
+            <img src = "lannister.jpg" id = "229">
+            <img src = "baratheon.png" id = "15">
+        </div>
+        <div id = "info">
+            <h2>House Details</h2>
+            <div class = "detail"></div>
+        </div>
+    </div>
+</body>
+</html>
